@@ -1,9 +1,10 @@
-const CACHE_NAME = "pantau-kakao-shell-v1";
+const CACHE_NAME = "pantau-kakao-shell-v2";
 const APP_SHELL = [
   new URL("./", self.registration.scope).href,
   new URL("./index.html", self.registration.scope).href,
   new URL("./manifest.json", self.registration.scope).href,
-  new URL("./icon.svg", self.registration.scope).href
+  new URL("./icon-kakao-192.png", self.registration.scope).href,
+  new URL("./assets/icon.png", self.registration.scope).href
 ];
 
 self.addEventListener("install", event => {
@@ -33,11 +34,16 @@ self.addEventListener("fetch", event => {
     event.respondWith(
       fetch(request)
         .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          }
           return response;
         })
-        .catch(async () => (await caches.match(request)) || (await caches.match(new URL("./index.html", self.registration.scope).href))
+        .catch(async () =>
+          (await caches.match(request)) ||
+          (await caches.match(new URL("./index.html", self.registration.scope).href))
+        )
     );
     return;
   }
@@ -52,4 +58,3 @@ self.addEventListener("fetch", event => {
     }))
   );
 });
-
