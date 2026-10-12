@@ -10,9 +10,9 @@
   "theme_color": "#10b981",
   "icons": [
     {
-      "src": "./icon.svg",
+      "src": "./icon-kakao-192",
       "sizes": "any",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
