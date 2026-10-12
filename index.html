@@ -8,7 +8,7 @@
     <title>PantauKakao By Fiq</title>
     
     <!-- PWA Manifest Placeholder -->
-    <link rel="manifest" href="./manifest.json">
+    <link id="manifest-placeholder" rel="manifest">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -69,7 +69,7 @@
             <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
                 <div class="flex items-center space-x-3">
                     <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/20 shrink-0">
-                        🌱
+                        ðŸŒ±
                     </div>
                     <div>
                         <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight tracking-tight">PantauKakao By Fiq</h1>
@@ -112,7 +112,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-white/20 dark:border-slate-800">
                         <div>
                             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 dark:bg-emerald-500/10 border border-white/30 dark:border-emerald-500/20 text-white dark:text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2 backdrop-blur-sm">
-                                <span>🎯</span> Estimasi Harga Beli Petani (Bersih)
+                                <span>ðŸŽ¯</span> Estimasi Harga Beli Petani (Bersih)
                             </div>
                             <h2 class="text-4xl sm:text-6xl font-black text-white tracking-tight mt-1" id="resHargaPetani">Rp 0 / kg</h2>
                             <p class="text-xs text-emerald-100 dark:text-slate-400 mt-2">Harga patokan per kg setelah potongan margin & biaya operasional gudang.</p>
@@ -128,7 +128,7 @@
                     </div>
 
                     <!-- Breakdown & Unit Converter Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 text-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 text-sm">
                         <div class="bg-white/10 dark:bg-slate-900/90 p-4 rounded-2xl border border-white/20 dark:border-slate-800 backdrop-blur-sm">
                             <span class="text-xs text-emerald-100 dark:text-slate-400 block font-medium">Konversi Harga Kakao Global</span>
                             <span class="font-bold text-white dark:text-emerald-400 text-base mt-1 block" id="resHargaBruto">Rp 0 / kg</span>
@@ -141,6 +141,11 @@
                             <span class="text-xs text-emerald-100 dark:text-slate-400 block font-medium">Biaya Logistik & Pengeringan</span>
                             <span class="font-bold text-rose-200 dark:text-rose-400 text-base mt-1 block" id="resPotonganLogistik">Rp 0 / kg</span>
                         </div>
+                        <div class="bg-white/10 dark:bg-slate-900/90 p-4 rounded-2xl border border-white/20 dark:border-slate-800 backdrop-blur-sm">
+                            <span class="text-xs text-emerald-100 dark:text-slate-400 block font-medium">Estimasi Total Nilai Kakao</span>
+                            <span class="font-bold text-white dark:text-emerald-400 text-base mt-1 block" id="resTotalKakao">Rp 0</span>
+                            <span class="text-[11px] text-emerald-100 dark:text-slate-500 mt-1 block" id="resJumlahKakao">Jumlah: 0 kg</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,7 +157,7 @@
                 <div class="lg:col-span-7 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl transition-colors space-y-5">
                     <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
                         <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span>⚙️</span> Parameter Harga & Biaya
+                            <span>âš™ï¸</span> Parameter Harga & Biaya
                         </h3>
                         <button onclick="resetDefaults()" class="text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">Reset Default</button>
                     </div>
@@ -188,7 +193,7 @@
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                                Kurs Dolar (USD → IDR)
+                                Kurs Dolar (USD â†’ IDR)
                             </label>
                             <button onclick="fetchRates()" class="text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 font-semibold transition-colors">
                                 <svg id="refreshIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
@@ -225,32 +230,44 @@
                         <p class="text-[11px] text-slate-500 mt-1">Estimasi biaya armada, sewa gudang & penurunan kadar air.</p>
                     </div>
 
+                    <!-- Input 5: Jumlah Kakao -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2">
+                            Jumlah Kakao Dimiliki (kg)
+                        </label>
+                        <div class="relative">
+                            <input type="number" id="inpJumlahKakao" value="0" min="0" step="0.1" oninput="calculate()" placeholder="Masukkan jumlah kakao" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 rounded-2xl py-3 px-4 pr-12 text-slate-900 dark:text-white text-base font-bold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
+                            <span class="absolute right-4 top-3.5 text-slate-400 font-bold">kg</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-1">Menghitung estimasi nilai total berdasarkan harga bersih per kg.</p>
+                    </div>
+
                 </div>
 
                 <!-- Info & Formula (5 cols) -->
                 <div class="lg:col-span-5 bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl transition-colors flex flex-col justify-between space-y-6">
                     <div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-800 pb-4 mb-4 flex items-center gap-2">
-                            <span>📖</span> Penjelasan Rumus Kalkulasi
+                            <span>ðŸ“–</span> Penjelasan Rumus Kalkulasi
                         </h3>
 
                         <div class="space-y-3.5 text-xs text-slate-700 dark:text-slate-300">
                             <div class="p-3.5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
                                 <span class="font-bold text-emerald-600 dark:text-emerald-400 block mb-1">1. Harga Dasar Bruto (Rp/Kg)</span>
                                 <code class="text-slate-800 dark:text-slate-200 font-mono text-[11px] bg-slate-200 dark:bg-slate-900 px-2 py-1 rounded block">
-                                    (Harga Kakao USD/MT × Kurs IDR) ÷ 1.000
+                                    (Harga Kakao USD/MT Ã— Kurs IDR) Ã· 1.000
                                 </code>
                             </div>
 
                             <div class="p-3.5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
                                 <span class="font-bold text-emerald-600 dark:text-emerald-400 block mb-1">2. Harga Beli Petani Bersih</span>
                                 <code class="text-slate-800 dark:text-slate-200 font-mono text-[11px] bg-slate-200 dark:bg-slate-900 px-2 py-1 rounded block">
-                                    (Harga Bruto × (100% - Margin%)) - Biaya Logistik
+                                    (Harga Bruto Ã— (100% - Margin%)) - Biaya Logistik
                                 </code>
                             </div>
 
                             <div class="p-3.5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800">
-                                <span class="font-bold text-slate-800 dark:text-slate-200 block mb-1">📱 Modus Offline & PWA Active</span>
+                                <span class="font-bold text-slate-800 dark:text-slate-200 block mb-1">ðŸ“± Modus Offline & PWA Active</span>
                                 <p class="text-slate-500 dark:text-slate-400 leading-relaxed">
                                     Aplikasi ini tersimpan di browser dan dapat diakses 100% tanpa jaringan internet di lokasi kebun.
                                 </p>
@@ -270,7 +287,7 @@
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-4">
                     <div>
                         <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                            <span>📈</span> Grafik Pergerakan Bursa Kakao Real-Time
+                            <span>ðŸ“ˆ</span> Grafik Pergerakan Bursa Kakao Real-Time
                         </h3>
                         <p class="text-xs text-slate-500 dark:text-slate-400">Pantau pergerakan lilin (candlestick) intraday langsung dari TradingView</p>
                     </div>
@@ -303,7 +320,7 @@
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        <span>Mode Real-Time Intraday Aktif • Candlestick & Indikator Interaktif</span>
+                        <span>Mode Real-Time Intraday Aktif â€¢ Candlestick & Indikator Interaktif</span>
                     </div>
                     <span id="chartSymbolBadge" class="font-mono text-emerald-600 dark:text-emerald-400 font-bold self-start sm:self-auto">CAPITALCOM:COCOA [15m]</span>
                 </div>
@@ -323,7 +340,7 @@
 
     <!-- Footer -->
     <footer class="mt-12 text-center text-xs text-slate-500 border-t border-slate-200 dark:border-slate-900 pt-6">
-        <p>© 2026 PantauKakao By Fiq • Antigravity PWA Edition</p>
+        <p>Â© 2026 PantauKakao By Fiq â€¢ Antigravity PWA Edition</p>
     </footer>
 
     <!-- Toast Notification -->
@@ -345,6 +362,9 @@
             margin: document.getElementById('inpMargin'),
             marginValDisplay: document.getElementById('marginValDisplay'),
             logistik: document.getElementById('inpLogistik'),
+            jumlahKakao: document.getElementById('inpJumlahKakao'),
+            resTotalKakao: document.getElementById('resTotalKakao'),
+            resJumlahKakao: document.getElementById('resJumlahKakao'),
             resHargaPetani: document.getElementById('resHargaPetani'),
             resHargaBruto: document.getElementById('resHargaBruto'),
             resPotonganMargin: document.getElementById('resPotonganMargin'),
@@ -380,6 +400,7 @@
             const kurs = parseFloat(elements.kurs.value) || 0;
             const margin = parseFloat(elements.margin.value) || 0;
             const logistik = parseFloat(elements.logistik.value) || 0;
+            const jumlahKakao = Math.max(0, parseFloat(elements.jumlahKakao.value) || 0);
 
             elements.marginValDisplay.textContent = margin + '%';
 
@@ -388,9 +409,12 @@
             const usdPerKg = hgDunia / 1000;
             const nilaiMarginPerKg = hargaBrutoPerKg * (margin / 100);
             calculatedHargaPetaniBersih = (hargaBrutoPerKg * (1 - margin / 100)) - logistik;
+            const totalNilaiKakao = calculatedHargaPetaniBersih * jumlahKakao;
 
             // Render Results
             elements.resHargaPetani.textContent = `${formatIDR(calculatedHargaPetaniBersih)} / kg`;
+            elements.resTotalKakao.textContent = formatIDR(totalNilaiKakao);
+            elements.resJumlahKakao.textContent = `Jumlah: ${jumlahKakao.toLocaleString('id-ID')} kg`;
             elements.resHargaBruto.textContent = `${formatIDR(hargaBrutoPerKg)} / kg`;
             elements.resPotonganMargin.textContent = `- ${formatIDR(nilaiMarginPerKg)} / kg`;
             elements.resPotonganLogistik.textContent = `- ${formatIDR(logistik)} / kg`;
@@ -517,12 +541,46 @@
         }
 
         function initPWA() {
-            // Manifest dan service worker harus berupa file statis pada origin yang sama.
-            // URL Blob tidak valid sebagai sumber service worker untuk GitHub Pages.
+            const manifestData = {
+                name: "PantauKakao By Fiq",
+                short_name: "PantauKakao",
+                description: "Aplikasi Pemantau Harga Kakao & Bursa Live",
+                start_url: "./kakao.html",
+                display: "standalone",
+                background_color: "#022c22",
+                theme_color: "#10b981",
+                icons: [
+                    {
+                        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðŸŒ±</text></svg>",
+                        sizes: "192x192 512x512",
+                        type: "image/svg+xml"
+                    }
+                ]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            document.getElementById('manifest-placeholder').setAttribute('href', URL.createObjectURL(manifestBlob));
+
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(() => console.log('Service worker terdaftar.'))
-                    .catch(err => console.warn('Service worker gagal didaftarkan:', err));
+                const swCode = `
+                    const CACHE_NAME = 'kakao-pwa-v1';
+                    self.addEventListener('install', (e) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('activate', (e) => {
+                        return self.clients.claim();
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(
+                            caches.match(e.request).then((res) => {
+                                return res || fetch(e.request).catch(() => caches.match(e.request));
+                            })
+                        );
+                    });
+                `;
+                const swBlob = new Blob([swCode], { type: 'text/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(err => {
+                    console.log('SW Reg Note:', err);
+                });
             }
 
             window.addEventListener('online', updateNetworkStatus);
@@ -569,6 +627,7 @@
                 kurs: elements.kurs.value,
                 margin: elements.margin.value,
                 logistik: elements.logistik.value,
+                jumlahKakao: elements.jumlahKakao.value,
                 lastUpdated: elements.lastUpdatedText.textContent,
                 lastUpdatedKakao: elements.lastUpdatedKakaoText ? elements.lastUpdatedKakaoText.textContent : ''
             };
@@ -588,6 +647,7 @@
                     if (data.kurs) elements.kurs.value = data.kurs;
                     if (data.margin !== undefined) elements.margin.value = data.margin;
                     if (data.logistik !== undefined) elements.logistik.value = data.logistik;
+                    if (data.jumlahKakao !== undefined) elements.jumlahKakao.value = data.jumlahKakao;
                     if (data.lastUpdated) elements.lastUpdatedText.textContent = data.lastUpdated;
                     if (data.lastUpdatedKakao && elements.lastUpdatedKakaoText) {
                         elements.lastUpdatedKakaoText.textContent = data.lastUpdatedKakao;
@@ -629,14 +689,16 @@
             try {
                 // 1. Sumber Utama: TradingView Futures Scanner (Dual Ticker: ICEUS & NYMEX, Timeout 5s)
                 try {
+                    // Gunakan text/plain agar browser memperlakukan request ini sebagai CORS-safelisted simple request
+                    // sehingga TIDAK mengirim preflight OPTIONS yang ditolak oleh scanner TradingView.
                     const tvRes = await fetchWithTimeout('https://scanner.tradingview.com/futures/scan', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 'Content-Type': 'text/plain' },
                         body: JSON.stringify({
                             symbols: { tickers: ['ICEUS:CC1!', 'NYMEX:CJ1!'] },
                             columns: ['close']
                         })
-                    }, 5000);
+                    }, 4000);
 
                     if (tvRes.ok) {
                         const tvData = await tvRes.json();
@@ -766,19 +828,23 @@
             const kurs = (parseFloat(elements.kurs.value) || 0).toLocaleString('id-ID');
             const margin = elements.margin.value || 0;
             const logistik = (parseFloat(elements.logistik.value) || 0).toLocaleString('id-ID');
+            const jumlahKakao = Math.max(0, parseFloat(elements.jumlahKakao.value) || 0);
+            const totalNilaiKakao = calculatedHargaPetaniBersih * jumlahKakao;
             const dateStr = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 
-            const summaryText = `📊 *ESTIMASI HARGA KAKAO PETANI*
+            const summaryText = `ðŸ“Š *ESTIMASI HARGA KAKAO PETANI*
 ----------------------------------------
-🗓️ Tanggal: ${dateStr}
+ðŸ—“ï¸ Tanggal: ${dateStr}
 
-💵 Kakao Dunia: $${hgDunia.toLocaleString('en-US')} / MT
-💱 Kurs USD: Rp ${kurs}
-🏭 Margin Pengepul: ${margin}%
-🚚 Potongan Logistik: Rp ${logistik} / kg
+ðŸ’µ Kakao Dunia: $${hgDunia.toLocaleString('en-US')} / MT
+ðŸ’± Kurs USD: Rp ${kurs}
+ðŸ­ Margin Pengepul: ${margin}%
+ðŸšš Potongan Logistik: Rp ${logistik} / kg
+ðŸ“¦ Jumlah Kakao: ${jumlahKakao.toLocaleString('id-ID')} kg
 ----------------------------------------
-💰 *Harga Dasar Bruto:* ${hgBruto}
-🎯 *Estimasi Beli Petani:* ${hgPetani}
+ðŸ’° *Harga Dasar Bruto:* ${hgBruto}
+ðŸŽ¯ *Estimasi Beli Petani:* ${hgPetani}
+ðŸ§® *Estimasi Total Nilai Kakao:* ${formatIDR(totalNilaiKakao)}
 ----------------------------------------
 _Dihitung via PantauKakao By Fiq_`;
 
