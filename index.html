@@ -8,7 +8,7 @@
     <title>PantauKakao By Fiq</title>
     
     <!-- PWA Manifest Placeholder -->
-    <link id="manifest-placeholder" rel="manifest">
+    <link rel="manifest" href="./manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -517,46 +517,12 @@
         }
 
         function initPWA() {
-            const manifestData = {
-                name: "PantauKakao By Fiq",
-                short_name: "PantauKakao",
-                description: "Aplikasi Pemantau Harga Kakao & Bursa Live",
-                start_url: "./kakao.html",
-                display: "standalone",
-                background_color: "#022c22",
-                theme_color: "#10b981",
-                icons: [
-                    {
-                        src: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>",
-                        sizes: "192x192 512x512",
-                        type: "image/svg+xml"
-                    }
-                ]
-            };
-            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-            document.getElementById('manifest-placeholder').setAttribute('href', URL.createObjectURL(manifestBlob));
-
+            // Manifest dan service worker harus berupa file statis pada origin yang sama.
+            // URL Blob tidak valid sebagai sumber service worker untuk GitHub Pages.
             if ('serviceWorker' in navigator) {
-                const swCode = `
-                    const CACHE_NAME = 'kakao-pwa-v1';
-                    self.addEventListener('install', (e) => {
-                        self.skipWaiting();
-                    });
-                    self.addEventListener('activate', (e) => {
-                        return self.clients.claim();
-                    });
-                    self.addEventListener('fetch', (e) => {
-                        e.respondWith(
-                            caches.match(e.request).then((res) => {
-                                return res || fetch(e.request).catch(() => caches.match(e.request));
-                            })
-                        );
-                    });
-                `;
-                const swBlob = new Blob([swCode], { type: 'text/javascript' });
-                navigator.serviceWorker.register(URL.createObjectURL(swBlob)).catch(err => {
-                    console.log('SW Reg Note:', err);
-                });
+                navigator.serviceWorker.register('./sw.js')
+                    .then(() => console.log('Service worker terdaftar.'))
+                    .catch(err => console.warn('Service worker gagal didaftarkan:', err));
             }
 
             window.addEventListener('online', updateNetworkStatus);
