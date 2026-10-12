@@ -1,6 +1,15 @@
 name: Build PantauKakao APK
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'manifest.json'
+      - 'sw.js'
+      - 'icon-kakao-192.png'
+      - 'assets/**'
   workflow_dispatch:
 
 jobs:
